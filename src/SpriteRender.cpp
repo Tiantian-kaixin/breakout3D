@@ -14,15 +14,16 @@ SpriteRender::~SpriteRender() {
 
 void SpriteRender::draw(const std::shared_ptr<GameObject>& gameObject) {
     shader->Use();
-    shader->SetMatrix4("view", glm::mat4(1.f));
     shader->SetMatrix4("model", glm::mat4(1.f));
-    shader->SetMatrix4("projection", glm::mat4(1.f));
     auto model = glm::mat4(1.f);
-    glm::translate(model, gameObject->space.position);
+    auto position = gameObject->space.position;
+    auto size = gameObject->space.size;
+    model = glm::translate(model, glm::vec3(position));
+    model = glm::scale(model, glm::vec3(size, 1.0f)); // last scale
     shader->SetMatrix4("model", model);
 
     glActiveTexture(GL_TEXTURE0);
-    gameObject->bind();
+    gameObject->bindTexture();
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -49,7 +50,7 @@ void SpriteRender::initRender() {
     glBindVertexArray(VAO);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3*sizeof (float )));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

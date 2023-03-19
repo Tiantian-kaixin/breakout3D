@@ -9,6 +9,8 @@
 #include "ResourceManager.h"
 #include <memory>
 #include "GameObject.h"
+#include "GameLevel.h"
+#include "BallObject.h"
 
 enum GameStatus {
     INITIAL = 0,
@@ -19,7 +21,7 @@ enum GameStatus {
 
 class Game {
 public:
-    Game();
+    Game(int width, int height);
     ~Game();
     void init();
     void update(float duration);
@@ -29,8 +31,11 @@ private:
     void checkCollision();
 
     GameStatus status = INITIAL;
-    std::shared_ptr<GameObject> gameObject;
+    std::shared_ptr<BallObject> gameObject;
     std::shared_ptr<SpriteRender> render;
+    std::shared_ptr<GameLevel> levels;
+    int width;
+    int height;
 };
 
 #endif //BREAKOUT3D_GAME_H

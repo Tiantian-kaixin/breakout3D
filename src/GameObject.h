@@ -4,7 +4,7 @@
 
 #ifndef BREAKOUT3D_GAMEOBJECT_H
 #define BREAKOUT3D_GAMEOBJECT_H
-
+#pragma once
 #include <memory>
 #include <glm.hpp>
 #include "Texture2D.h"
@@ -12,21 +12,20 @@
 struct ObjectSpace {
     glm::vec3 position;
     glm::vec2 size;
+    glm::vec3 velocity;
     float rotation;
-};
-
-struct ObjectInfo {
-    bool isSolid;
-    bool isDestroy;
+    float radius;
 };
 
 class GameObject {
 public:
-    GameObject(ObjectSpace space, ObjectInfo info, std::shared_ptr<Texture2D> texture2D);
+    GameObject();
+    GameObject(ObjectSpace space, std::shared_ptr<Texture2D> texture2D);
     ~GameObject();
-    void bind();
+    void bindTexture();
     ObjectSpace space;
-    ObjectInfo info;
+    bool isSolid;
+    bool isDestroy;
 private:
     std::shared_ptr<Texture2D> texture;
 };

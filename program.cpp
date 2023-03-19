@@ -35,7 +35,7 @@ int main() {
     }
     glfwMakeContextCurrent(window);
     /* init render */
-    auto game = std::make_shared<Game>();
+    auto game = std::make_shared<Game>(SCR_WIDTH, SCR_HEIGHT);
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = static_cast<float>(glfwGetTime());
